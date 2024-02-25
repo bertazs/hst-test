@@ -63,8 +63,6 @@ export const updateAndLoadMore = (genders: string[], homeworld: string[], search
         // Reset loading state
         dispatch(setLoading(true));
 
-        console.log(genders[0].length > 0)
-
         if(search.length > 0) {
             dispatch(resetFilter());
         } else {
