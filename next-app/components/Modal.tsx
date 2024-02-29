@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { ModalProps } from '@/types';
 import {getFilm} from "@/services/swapiService";
+import { motion } from 'framer-motion';
+import { useSpring } from "framer-motion"
 
 const Modal = ({ index, name, height, mass, films, closeModal, isOpen }: ModalProps) => {
     const [filmNames, setFilmNames] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
-
+    const x = useSpring(400, { stiffness: 2000, damping: 80 });
     useEffect(() => {
         const fetchFilmNames = async () => {
             try {
@@ -31,8 +33,25 @@ const Modal = ({ index, name, height, mass, films, closeModal, isOpen }: ModalPr
     }, [films, isOpen]);
 
     return (
-        <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>
-            <div className="modal-content p-4 md:p-8 lg:p-12 gap-4 md:gap-6 lg:gap-8">
+        <motion.div
+            initial={{
+                opacity: 0,
+                visibility: "hidden"
+            }}
+            exit={{
+                opacity: 0,
+                visibility: "hidden"
+            }}
+            animate={{
+                opacity: isOpen ? 1 : 0,
+                visibility: isOpen ? "visible" : "hidden"
+            }}
+            transition={{ ease: "easeInOut", duration: 0.3 }}
+            className={`modal flex`}>
+            <motion.div
+                style={{ x: x }}
+                animate={{ x: isOpen ? 0 : 400 }}
+                className="modal-content p-4 md:p-8 lg:p-12 gap-4 md:gap-6 lg:gap-8">
                 <div className="flex justify-between">
                     <h1 className="text-3xl font-semibold">{name}</h1>
                     <div className="cursor-pointer group" onClick={closeModal}>
@@ -87,8 +106,8 @@ const Modal = ({ index, name, height, mass, films, closeModal, isOpen }: ModalPr
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 };
 

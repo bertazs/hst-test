@@ -5,9 +5,10 @@ export interface HeroProps {
 }
 
 export interface ListItemProps {
-    index: string | undefined;
+    index: number;
     name: string;
     openModal: () => void;
+    id: string | undefined;
 }
 
 export interface Character {
