@@ -4,7 +4,6 @@ const SWAPI_BASE_URL = 'https://swapi.dev/api';
 
 export const getCharacters = async (url: string, search?: string) => {
     const apiUrl = url !== '' ? url : `${SWAPI_BASE_URL}/people/`;
-
     try {
         const response = await axios.get(apiUrl, {
             params: {
